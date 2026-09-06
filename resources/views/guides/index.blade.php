@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Energy switching guides — Brillia')
-@section('meta_description', 'Free UK energy guides from Brillia: how to switch supplier, tariffs explained, and practical ways to cut your bills.')
+@section('title', 'Energy switching guides — '.config('company.product_name'))
+@section('meta_description', 'Free UK energy guides from Brillia Energy: how to switch supplier, tariffs explained, and practical ways to cut your bills. Written for UK households.')
 @section('canonical', route('guides.index'))
 
 @section('content')
@@ -15,7 +15,7 @@
                     Energy advice, without the jargon
                 </h1>
                 <p class="mt-3 text-sm text-brillia-muted sm:text-base">
-                    Practical UK switching and tariff guides to help you compare with confidence.
+                    Practical UK switching and tariff guides from {{ config('company.legal_name') }}, trading as {{ config('company.trading_name') }}. Free to read — written to help you compare with confidence.
                 </p>
             </div>
 
@@ -35,6 +35,7 @@
                         </p>
                         <p class="mt-4 text-xs text-neutral-400">
                             Updated {{ \Illuminate\Support\Carbon::parse($guide['updated'])->format('j M Y') }}
+                            · {{ $guide['reading_minutes'] }} min read
                         </p>
                         <a
                             href="{{ route('guides.show', $slug) }}"

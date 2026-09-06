@@ -16,10 +16,10 @@
                     @endforeach
                 </div>
                 <p class="flex items-center gap-1.5 text-sm font-medium text-brillia-ink">
-                    <svg class="h-3.5 w-3.5 text-brillia-lime" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+                    <svg class="h-3.5 w-3.5 shrink-0 text-brillia-lime" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
                         <path d="M7 1.1 8.6 5h4.2l-3.4 2.5 1.3 4L7 9.2 3.3 11.5l1.3-4L1.2 5h4.2L7 1.1Z" />
                     </svg>
-                    Join <span class="font-bold">50,000+</span> happy customers
+                    Join <span class="font-bold">thousands of</span> happy customers
                 </p>
             </div>
 
@@ -32,15 +32,15 @@
                 Brillia compares the best energy deals in seconds so you can save more, stress less.
             </p>
 
-            <ul class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2.5 text-sm font-medium text-brillia-ink sm:mt-6 sm:gap-x-6 sm:text-[0.9375rem]">
+            <ul class="mt-5 flex flex-col gap-2.5 text-sm font-medium text-brillia-ink sm:mt-6 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2.5 sm:text-[0.9375rem]">
                 @foreach (['100% Free', 'No sign-up required', 'Takes 60 seconds'] as $item)
-                    <li class="inline-flex items-center gap-2">
-                        <span class="inline-flex h-[1.125rem] w-[1.125rem] shrink-0 items-center justify-center rounded-full bg-brillia-lime">
+                    <li class="grid grid-cols-[1.125rem_1fr] items-center gap-x-2.5">
+                        <span class="inline-flex h-[1.125rem] w-[1.125rem] items-center justify-center rounded-full bg-brillia-lime">
                             <svg class="h-2.5 w-2.5 text-white" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                                 <path d="M2.4 6.2 4.9 8.7 9.6 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </span>
-                        {{ $item }}
+                        <span>{{ $item }}</span>
                     </li>
                 @endforeach
             </ul>

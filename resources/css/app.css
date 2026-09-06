@@ -40,6 +40,31 @@
     .hero-float--delay-2 {
         animation-delay: -3.4s;
     }
+
+    .supplier-marquee {
+        animation: supplier-marquee 28s linear infinite;
+    }
+
+    .supplier-marquee-mask::before,
+    .supplier-marquee-mask::after {
+        content: '';
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        height: 100%;
+        width: 2.5rem;
+    }
+
+    .supplier-marquee-mask::before {
+        left: 0;
+        background: linear-gradient(to right, #fff, transparent);
+    }
+
+    .supplier-marquee-mask::after {
+        right: 0;
+        background: linear-gradient(to left, #fff, transparent);
+    }
 }
 
 @keyframes hero-float {
@@ -52,8 +77,18 @@
     }
 }
 
+@keyframes supplier-marquee {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
-    .hero-float {
+    .hero-float,
+    .supplier-marquee {
         animation: none;
     }
 }

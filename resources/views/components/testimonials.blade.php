@@ -114,6 +114,8 @@
                                     width="40"
                                     height="40"
                                     class="h-10 w-10 rounded-full object-cover"
+                                    loading="lazy"
+                                    decoding="async"
                                 >
                                 <div class="min-w-0 leading-tight">
                                     <p class="text-sm font-bold text-brillia-ink">{{ $review['name'] }}</p>
@@ -126,6 +128,7 @@
             </div>
         </div>
 
+        {{-- Trustpilot CTA hidden for now
         <div class="mt-9 flex justify-center sm:mt-10">
             <a
                 href="https://www.trustpilot.com"
@@ -141,5 +144,6 @@
                 </span>
             </a>
         </div>
+        --}}
     </div>
 </section>

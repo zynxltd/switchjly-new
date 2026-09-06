@@ -25,4 +25,21 @@ class ChatbotSiteKnowledgeTest extends TestCase
             ->assertSee('data-affiliates-url="'.route('affiliates').'"', false)
             ->assertSee('data-guides-url="'.route('guides.index').'"', false);
     }
+
+    public function test_compare_funnel_does_not_include_chatbot(): void
+    {
+        $this->get(route('compare.details'))
+            ->assertOk()
+            ->assertDontSee('x-data="brilliaChat"', false);
+    }
+
+    public function test_homepage_hero_lists_usp_ticks(): void
+    {
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertSee('100% Free', false)
+            ->assertSee('No sign-up required', false)
+            ->assertSee('Takes 60 seconds', false)
+            ->assertSee('supplier-marquee', false);
+    }
 }

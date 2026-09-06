@@ -15,6 +15,7 @@ use App\Http\Controllers\CompareController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\LeadController;
+use App\Support\GuideArticles;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -36,6 +37,29 @@ Route::get('/affiliates', function () {
 
 Route::get('/guides', [GuideController::class, 'index'])->name('guides.index');
 Route::get('/guides/{slug}', [GuideController::class, 'show'])->name('guides.show');
+
+Route::get('/sitemap.xml', function () {
+    $urls = [
+        ['loc' => route('home'), 'changefreq' => 'weekly', 'priority' => '1.0'],
+        ['loc' => route('how-it-works'), 'changefreq' => 'monthly', 'priority' => '0.8'],
+        ['loc' => route('guides.index'), 'changefreq' => 'weekly', 'priority' => '0.9'],
+        ['loc' => route('contact'), 'changefreq' => 'monthly', 'priority' => '0.6'],
+        ['loc' => route('affiliates'), 'changefreq' => 'monthly', 'priority' => '0.5'],
+        ['loc' => route('compare.details'), 'changefreq' => 'weekly', 'priority' => '0.9'],
+    ];
+
+    foreach (array_keys(GuideArticles::all()) as $slug) {
+        $urls[] = [
+            'loc' => route('guides.show', $slug),
+            'changefreq' => 'monthly',
+            'priority' => '0.8',
+        ];
+    }
+
+    return response()
+        ->view('sitemap', ['urls' => $urls])
+        ->header('Content-Type', 'application/xml');
+})->name('sitemap');
 
 Route::prefix('compare')->name('compare.')->group(function () {
     Route::get('/details', [CompareController::class, 'details'])->name('details');

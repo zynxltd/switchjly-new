@@ -15,6 +15,5 @@
 
     @yield('content')
 
-    <x-chatbot />
 </body>
 </html>
