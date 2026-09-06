@@ -30,6 +30,118 @@ window.postcodeCompareForm = () => ({
     },
 });
 
+Alpine.data('leadPopup', () => ({
+    openState: false,
+    email: '',
+    postcode: '',
+    loading: false,
+    success: false,
+    error: '',
+    message: '',
+    timer: null,
+    storeUrl: '/leads',
+
+    init() {
+        this.storeUrl = this.$el.dataset.storeUrl || '/leads';
+
+        // Dismiss-only flags must not permanently hide the popup — only a completed
+        // subscribe should. Clear legacy permanent-dismiss keys so returning visitors
+        // still see the 10s prompt until they subscribe.
+        localStorage.removeItem('brillia_lead_dismissed');
+        localStorage.removeItem('brillia_lead_dismissed_at');
+        localStorage.removeItem('switchly_lead_dismissed');
+
+        if (this.isDone()) {
+            return;
+        }
+
+        this.timer = setTimeout(() => this.open(), 10000);
+    },
+
+    isDone() {
+        return localStorage.getItem('brillia_lead_done') === '1'
+            || localStorage.getItem('switchly_lead_done') === '1';
+    },
+
+    open({ force = false } = {}) {
+        if (this.isDone()) {
+            return;
+        }
+
+        if (this.timer) {
+            clearTimeout(this.timer);
+            this.timer = null;
+        }
+
+        this.openState = true;
+        this.error = '';
+        document.body.classList.add('overflow-hidden');
+    },
+
+    close() {
+        this.openState = false;
+        document.body.classList.remove('overflow-hidden');
+
+        if (this.timer) {
+            clearTimeout(this.timer);
+            this.timer = null;
+        }
+
+        if (this.success) {
+            this.markDone();
+        }
+    },
+
+    markDone() {
+        localStorage.setItem('brillia_lead_done', '1');
+        localStorage.removeItem('switchly_lead_done');
+        localStorage.removeItem('brillia_lead_dismissed');
+        localStorage.removeItem('brillia_lead_dismissed_at');
+        localStorage.removeItem('switchly_lead_dismissed');
+    },
+
+    async submit() {
+        this.loading = true;
+        this.error = '';
+
+        try {
+            const token = document.querySelector('meta[name="csrf-token"]')?.content;
+            const response = await fetch(this.storeUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'X-CSRF-TOKEN': token,
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({
+                    email: this.email,
+                    postcode: this.postcode || null,
+                    source: 'subscribe_popup',
+                }),
+            });
+
+            const data = await response.json().catch(() => ({}));
+
+            if (!response.ok) {
+                const firstError = data.errors
+                    ? Object.values(data.errors).flat()[0]
+                    : data.message || 'Something went wrong. Please try again.';
+                this.error = firstError;
+                return;
+            }
+
+            this.success = true;
+            this.message = data.message || 'Thanks — check your inbox for deals.';
+            this.markDone();
+        } catch (e) {
+            this.error = 'Network error. Please try again.';
+        } finally {
+            this.loading = false;
+        }
+    },
+}));
+
 Alpine.data('brilliaChat', () => ({
     open: false,
     identified: false,
@@ -223,7 +335,7 @@ Alpine.data('brilliaChat', () => ({
             },
             {
                 test: /(newsletter|subscribe|mailing list)/,
-                reply: `Email updates are handled by our mailing partner when available on the site — we don’t run a built-in subscribe popup. For questions, use Contact (${this.contactUrl}).`,
+                reply: `You can subscribe via the email popup (it appears after a few seconds) for occasional UK energy tips and tariff updates. Unsubscribe anytime. We don’t sell your personal data.`,
             },
             {
                 test: /(filter|cheapest|top rated|biggest saving|green energy filter|sort deals|annual cost)/,

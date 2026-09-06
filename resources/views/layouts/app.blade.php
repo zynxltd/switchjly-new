@@ -19,7 +19,6 @@
     <style>[x-cloak]{display:none!important}</style>
 </head>
 <body class="min-h-screen bg-white font-sans text-brillia-ink antialiased">
-    <x-promo-banner />
     <x-header />
 
     <main>
@@ -27,6 +26,7 @@
     </main>
 
     <x-footer />
+    <x-lead-popup />
     <x-chatbot />
 </body>
 </html>
