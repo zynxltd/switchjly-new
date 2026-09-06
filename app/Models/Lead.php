@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Lead extends Model
 {
@@ -11,6 +12,8 @@ class Lead extends Model
         'name',
         'postcode',
         'source',
+        'affiliate_id',
+        'referral_code',
         'esp_synced_at',
         'esp_error',
         'meta',
@@ -22,5 +25,10 @@ class Lead extends Model
             'esp_synced_at' => 'datetime',
             'meta' => 'array',
         ];
+    }
+
+    public function affiliate(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'affiliate_id');
     }
 }

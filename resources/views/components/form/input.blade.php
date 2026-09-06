@@ -18,7 +18,7 @@
             value="{{ old($name, $value) }}"
             placeholder="{{ $placeholder }}"
             {{ $attributes->merge([
-                'class' => 'w-full rounded-xl border border-switchly-border bg-white px-4 py-3.5 text-sm text-switchly-ink outline-none placeholder:text-neutral-400 focus:border-switchly-ink focus:ring-2 focus:ring-switchly-lime/30 ' . ($icon ? 'pr-11' : ''),
+                'class' => 'w-full rounded-xl border border-switchly-border bg-white px-3.5 py-2.5 text-sm text-switchly-ink outline-none placeholder:text-neutral-400 focus:border-switchly-ink focus:ring-2 focus:ring-switchly-lime/30 sm:px-4 sm:py-3.5 ' . ($icon ? 'pr-10 sm:pr-11' : ''),
             ]) }}
         >
         @if ($icon === 'pin')

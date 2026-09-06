@@ -40,4 +40,11 @@ return [
         'group_id' => env('MAILERLITE_GROUP_ID'),
     ],
 
+    'energy_shop' => [
+        'switching_base_url' => env('ENERGY_SHOP_SWITCHING_BASE_URL'),
+        'tariff_feed_base_url' => env('ENERGY_SHOP_TARIFF_FEED_BASE_URL'),
+        'api_key' => env('ENERGY_SHOP_API_KEY'),
+        'timeout' => env('ENERGY_SHOP_TIMEOUT', 20),
+    ],
+
 ];

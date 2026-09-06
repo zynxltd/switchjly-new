@@ -17,10 +17,11 @@
 
         <div class="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-8 lg:gap-10">
             <nav class="flex flex-wrap gap-x-5 gap-y-2 text-sm text-switchly-muted" aria-label="Footer">
-                <a href="#why-switchly" class="transition hover:text-switchly-ink">About us</a>
-                <a href="#faqs" class="transition hover:text-switchly-ink">Contact</a>
-                <a href="#privacy" class="transition hover:text-switchly-ink">Privacy Policy</a>
-                <a href="#terms" class="transition hover:text-switchly-ink">Terms &amp; Conditions</a>
+                <a href="{{ url('/#why-switchly') }}" class="transition hover:text-switchly-ink">About us</a>
+                <a href="{{ route('contact') }}" class="transition hover:text-switchly-ink">Contact</a>
+                <a href="{{ route('affiliates') }}" class="transition hover:text-switchly-ink">Affiliates</a>
+                <a href="{{ route('guides.index') }}" class="transition hover:text-switchly-ink">Guides</a>
+                <a href="{{ url('/#faqs') }}" class="transition hover:text-switchly-ink">FAQs</a>
             </nav>
 
             <div class="flex items-center gap-2.5">

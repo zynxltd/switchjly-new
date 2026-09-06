@@ -10,14 +10,14 @@
     <div class="mx-auto flex max-w-7xl items-center justify-center gap-3 px-5 py-2.5 text-center sm:px-8 lg:gap-4 lg:px-10">
         <span class="hidden h-2 w-2 shrink-0 rounded-full bg-switchly-lime sm:inline-block" aria-hidden="true"></span>
         <p class="text-[0.8125rem] font-medium leading-snug sm:text-sm">
-            <span class="text-switchly-lime">Limited time:</span>
-            Compare free energy deals and see how much you could save —
+            <span class="text-switchly-lime">Free comparison:</span>
+            Check today’s UK energy deals and see what you could save —
             <button
                 type="button"
                 class="font-bold text-white underline decoration-switchly-lime decoration-2 underline-offset-2 transition hover:text-switchly-lime"
                 @click="$dispatch('open-lead-popup')"
             >
-                Get my rates
+                Compare now
             </button>
         </p>
         <button

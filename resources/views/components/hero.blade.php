@@ -47,7 +47,7 @@
 
             {{-- Postcode form: stacked on mobile, combined pill from sm+ --}}
             <form action="{{ route('compare.details') }}" method="get" class="mt-6 sm:mt-8">
-                <div class="flex flex-col gap-2.5 rounded-full border border-switchly-border bg-white p-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] max-sm:rounded-[1.75rem] sm:flex-row sm:items-center sm:gap-0">
+                <div class="flex flex-col gap-2 rounded-2xl border border-switchly-border bg-white p-1.5 shadow-[0_8px_30px_rgba(0,0,0,0.06)] sm:flex-row sm:items-center sm:gap-0 sm:rounded-full">
                     <label class="relative min-w-0 flex-1">
                         <span class="sr-only">Postcode</span>
                         <input
@@ -55,9 +55,9 @@
                             name="postcode"
                             placeholder="Enter your postcode"
                             autocomplete="postal-code"
-                            class="w-full rounded-full bg-transparent py-3 pl-5 pr-11 text-base text-switchly-ink outline-none placeholder:text-neutral-400 sm:py-3.5 sm:text-[0.9375rem]"
+                            class="w-full rounded-xl bg-transparent py-2.5 pl-4 pr-10 text-sm text-switchly-ink outline-none placeholder:text-neutral-400 sm:rounded-full sm:py-3.5 sm:pl-5 sm:pr-11 sm:text-[0.9375rem]"
                         >
-                        <svg class="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <svg class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400 sm:right-4 sm:h-5 sm:w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <path d="M10 10.8a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4Z" stroke="currentColor" stroke-width="1.5" />
                             <path d="M10 17.5s6-5.1 6-9.2A6 6 0 1 0 4 8.3c0 4.1 6 9.2 6 9.2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
                         </svg>
@@ -65,11 +65,11 @@
 
                     <button
                         type="submit"
-                        class="inline-flex shrink-0 items-center justify-center gap-2.5 self-stretch rounded-full bg-switchly-black py-3 pl-5 pr-2.5 text-[0.9375rem] font-semibold text-white transition hover:bg-neutral-800 sm:self-auto sm:py-2.5"
+                        class="inline-flex shrink-0 items-center justify-center gap-2 self-stretch rounded-xl bg-switchly-black py-2.5 pl-4 pr-2 text-sm font-semibold text-white transition hover:bg-neutral-800 sm:gap-2.5 sm:self-auto sm:rounded-full sm:py-2.5 sm:pl-5 sm:pr-2.5 sm:text-[0.9375rem]"
                     >
                         Compare now
-                        <span class="inline-flex h-7 w-7 items-center justify-center rounded-full bg-switchly-lime text-switchly-black">
-                            <svg class="h-3.5 w-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                        <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-switchly-lime text-switchly-black sm:h-7 sm:w-7">
+                            <svg class="h-3 w-3 sm:h-3.5 sm:w-3.5" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                                 <path d="M2.5 7h9M7.5 3.5 11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
                         </span>
@@ -85,7 +85,7 @@
                 We don't share your data. Ever.
             </p>
 
-            {{-- Trustpilot --}}
+            {{-- Trustpilot (hidden for now)
             <div class="mt-10 flex flex-wrap items-center gap-x-3.5 gap-y-2 text-switchly-ink sm:mt-12 sm:gap-x-4">
                 <span class="text-base font-bold sm:text-lg">Excellent</span>
                 <div class="flex items-center gap-1" aria-label="5 star rating">
@@ -107,16 +107,58 @@
                     Trustpilot
                 </span>
             </div>
+            --}}
         </div>
 
-        {{-- Right: hero visual --}}
-        <div class="relative mx-auto w-full max-w-xl lg:max-w-none lg:justify-self-end">
+        {{-- Right: hero visual (desktop only) --}}
+        <div class="relative mx-auto hidden aspect-square w-full max-w-[22rem] sm:max-w-[26rem] lg:block lg:max-w-[30rem] lg:justify-self-end">
+            {{-- Soft glow behind bulb --}}
+            <div
+                class="pointer-events-none absolute left-1/2 top-[42%] h-[55%] w-[55%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-switchly-lime/25 blur-3xl"
+                aria-hidden="true"
+            ></div>
+
+            {{-- Icon: bolt (top-left) --}}
+            <div class="hero-float absolute left-[4%] top-[14%] z-10 sm:left-[6%] sm:top-[12%]">
+                <span class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-[0_10px_30px_rgba(0,0,0,0.12)] ring-1 ring-black/5 sm:h-16 sm:w-16">
+                    <svg class="h-6 w-6 text-switchly-ink sm:h-7 sm:w-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M13.2 2 4 13.2h6.2L9.4 22 20 10.2h-6.4L13.2 2Z" />
+                    </svg>
+                </span>
+            </div>
+
+            {{-- Icon: pound (mid-left) --}}
+            <div class="hero-float hero-float--delay absolute left-[2%] top-[48%] z-10 sm:left-[4%]">
+                <span class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-[0_10px_30px_rgba(0,0,0,0.12)] ring-1 ring-black/5 sm:h-16 sm:w-16">
+                    <span class="text-xl font-extrabold leading-none text-switchly-ink sm:text-2xl">£</span>
+                </span>
+            </div>
+
+            {{-- Icon: chart (top-right) --}}
+            <div class="hero-float hero-float--delay-2 absolute right-[6%] top-[18%] z-10 sm:right-[8%] sm:top-[16%]">
+                <span class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-[0_10px_30px_rgba(0,0,0,0.12)] ring-1 ring-black/5 sm:h-16 sm:w-16">
+                    <svg class="h-6 w-6 text-switchly-ink sm:h-7 sm:w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M5 19V11h3.2v8H5Zm5.4 0V7h3.2v12h-3.2Zm5.4 0V4H19v15h-3.2Z" fill="currentColor"/>
+                    </svg>
+                </span>
+            </div>
+
+            {{-- Icon: leaf (bottom-right) --}}
+            <div class="hero-float absolute bottom-[18%] right-[4%] z-10 sm:bottom-[16%] sm:right-[6%]">
+                <span class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white shadow-[0_10px_30px_rgba(0,0,0,0.12)] ring-1 ring-black/5 sm:h-16 sm:w-16">
+                    <svg class="h-6 w-6 text-switchly-ink sm:h-7 sm:w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M6 18c6-1 10-5 12-12-7 2-11 6-12 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                        <path d="M7.5 16.5c2.5-2.5 5.5-4.2 9-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                </span>
+            </div>
+
             <img
                 src="{{ asset('images/hero-right.png') }}"
                 alt="Lightbulb with a glowing lightning bolt — lower bills, brighter future"
-                width="961"
-                height="950"
-                class="mx-auto h-auto w-full max-w-[36rem] object-contain lg:max-w-none"
+                width="584"
+                height="980"
+                class="relative z-[1] mx-auto h-full w-auto max-h-full object-contain"
             >
         </div>
     </div>

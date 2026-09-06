@@ -27,3 +27,33 @@
         @apply font-sans text-switchly-ink antialiased;
     }
 }
+
+@layer components {
+    .hero-float {
+        animation: hero-float 5.5s ease-in-out infinite;
+    }
+
+    .hero-float--delay {
+        animation-delay: -1.8s;
+    }
+
+    .hero-float--delay-2 {
+        animation-delay: -3.4s;
+    }
+}
+
+@keyframes hero-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-float {
+        animation: none;
+    }
+}

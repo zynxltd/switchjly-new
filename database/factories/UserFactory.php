@@ -29,8 +29,29 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'role' => User::ROLE_AFFILIATE,
+            'referral_code' => Str::upper(Str::random(8)),
+            'commission_rate' => 30,
             'remember_token' => Str::random(10),
         ];
+    }
+
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => User::ROLE_ADMIN,
+            'referral_code' => null,
+            'commission_rate' => 0,
+        ]);
+    }
+
+    public function affiliate(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => User::ROLE_AFFILIATE,
+            'referral_code' => Str::upper(Str::random(8)),
+            'commission_rate' => 30,
+        ]);
     }
 
     /**

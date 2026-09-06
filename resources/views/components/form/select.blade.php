@@ -14,7 +14,7 @@
         <select
             name="{{ $name }}"
             {{ $attributes->merge([
-                'class' => 'w-full appearance-none rounded-xl border border-switchly-border bg-white px-4 py-3.5 pr-11 text-sm text-switchly-ink outline-none focus:border-switchly-ink focus:ring-2 focus:ring-switchly-lime/30',
+                'class' => 'w-full appearance-none rounded-xl border border-switchly-border bg-white px-3.5 py-2.5 pr-10 text-sm text-switchly-ink outline-none focus:border-switchly-ink focus:ring-2 focus:ring-switchly-lime/30 sm:px-4 sm:py-3.5 sm:pr-11',
             ]) }}
         >
             <option value="" disabled @selected(old($name, $value) === '')>{{ $placeholder }}</option>

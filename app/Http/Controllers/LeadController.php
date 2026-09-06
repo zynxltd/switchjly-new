@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lead;
 use App\Services\MailerLiteService;
+use App\Support\AffiliateAttribution;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,8 @@ class LeadController extends Controller
             'source' => ['nullable', 'string', 'max:40'],
         ]);
 
+        $attribution = AffiliateAttribution::fromRequest($request);
+
         $lead = Lead::query()->updateOrCreate(
             ['email' => strtolower($validated['email'])],
             [
@@ -26,6 +29,8 @@ class LeadController extends Controller
                     ? strtoupper(preg_replace('/\s+/', ' ', trim($validated['postcode'])))
                     : null,
                 'source' => $validated['source'] ?? 'popup',
+                'affiliate_id' => $attribution['affiliate_id'],
+                'referral_code' => $attribution['referral_code'],
                 'meta' => [
                     'ip' => $request->ip(),
                     'user_agent' => substr((string) $request->userAgent(), 0, 500),

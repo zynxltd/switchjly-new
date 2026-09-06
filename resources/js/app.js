@@ -16,16 +16,33 @@ Alpine.data('leadPopup', () => ({
     init() {
         this.storeUrl = this.$el.dataset.storeUrl || '/leads';
 
-        if (localStorage.getItem('switchly_lead_done') === '1') {
+        if (this.isDone() || this.isDismissed()) {
             return;
         }
 
         this.timer = setTimeout(() => this.open(), 10000);
     },
 
-    open() {
-        if (localStorage.getItem('switchly_lead_done') === '1') {
+    isDone() {
+        return localStorage.getItem('switchly_lead_done') === '1';
+    },
+
+    isDismissed() {
+        return localStorage.getItem('switchly_lead_dismissed') === '1';
+    },
+
+    open({ force = false } = {}) {
+        if (this.isDone()) {
             return;
+        }
+
+        if (!force && this.isDismissed()) {
+            return;
+        }
+
+        if (this.timer) {
+            clearTimeout(this.timer);
+            this.timer = null;
         }
 
         this.openState = true;
@@ -44,6 +61,8 @@ Alpine.data('leadPopup', () => ({
 
         if (this.success) {
             localStorage.setItem('switchly_lead_done', '1');
+        } else {
+            localStorage.setItem('switchly_lead_dismissed', '1');
         }
     },
 
@@ -64,7 +83,7 @@ Alpine.data('leadPopup', () => ({
                 body: JSON.stringify({
                     email: this.email,
                     postcode: this.postcode || null,
-                    source: 'popup',
+                    source: 'subscribe_popup',
                 }),
             });
 
@@ -81,6 +100,7 @@ Alpine.data('leadPopup', () => ({
             this.success = true;
             this.message = data.message || 'Thanks — check your inbox for deals.';
             localStorage.setItem('switchly_lead_done', '1');
+            localStorage.removeItem('switchly_lead_dismissed');
         } catch (e) {
             this.error = 'Network error. Please try again.';
         } finally {

@@ -133,43 +133,43 @@
         </form>
 
         {{-- Trust strip --}}
-        <div class="mt-10 border-t border-switchly-border pt-8">
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-4">
-                <div class="flex items-center gap-3">
-                    <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-300 text-switchly-ink">
-                        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <div class="mt-8 border-t border-switchly-border pt-6 sm:mt-10 sm:pt-8">
+            <div class="grid grid-cols-3 gap-2 sm:gap-4">
+                <div class="flex flex-col items-center gap-2 text-center sm:flex-row sm:items-center sm:gap-3 sm:text-left">
+                    <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-neutral-300 text-switchly-ink sm:h-10 sm:w-10">
+                        <svg class="h-3.5 w-3.5 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <path d="M5 8V6a5 5 0 0 1 10 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                             <rect x="3.5" y="8" width="13" height="9" rx="2" stroke="currentColor" stroke-width="1.5" />
                         </svg>
                     </span>
                     <div>
-                        <p class="text-sm font-bold text-switchly-ink">Secure</p>
-                        <p class="text-xs text-switchly-muted">Bank-level encryption</p>
+                        <p class="text-[0.6875rem] font-bold text-switchly-ink sm:text-sm">Secure</p>
+                        <p class="text-[0.625rem] leading-snug text-switchly-muted sm:text-xs">Bank-level encryption</p>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-300 text-switchly-ink">
-                        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <div class="flex flex-col items-center gap-2 text-center sm:flex-row sm:items-center sm:gap-3 sm:text-left">
+                    <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-neutral-300 text-switchly-ink sm:h-10 sm:w-10">
+                        <svg class="h-3.5 w-3.5 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <path d="M10 17.5c-2.2-1.4-6.5-4.8-6.5-9.2A4.2 4.2 0 0 1 10 4.5a4.2 4.2 0 0 1 6.5 3.8c0 4.4-4.3 7.8-6.5 9.2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
                             <path d="M10 4.5v13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                         </svg>
                     </span>
                     <div>
-                        <p class="text-sm font-bold text-switchly-ink">100% free</p>
-                        <p class="text-xs text-switchly-muted">No hidden costs</p>
+                        <p class="text-[0.6875rem] font-bold text-switchly-ink sm:text-sm">100% free</p>
+                        <p class="text-[0.625rem] leading-snug text-switchly-muted sm:text-xs">No hidden costs</p>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-300 text-switchly-ink">
-                        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <div class="flex flex-col items-center gap-2 text-center sm:flex-row sm:items-center sm:gap-3 sm:text-left">
+                    <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-neutral-300 text-switchly-ink sm:h-10 sm:w-10">
+                        <svg class="h-3.5 w-3.5 sm:h-4 sm:w-4" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                             <path d="M10 2.5v3.5M10 14v3.5M2.5 10H6M14 10h3.5M4.8 4.8l2.5 2.5M12.7 12.7l2.5 2.5M15.2 4.8l-2.5 2.5M7.3 12.7l-2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                         </svg>
                     </span>
                     <div>
-                        <p class="text-sm font-bold text-switchly-ink">Trusted</p>
-                        <p class="text-xs text-switchly-muted">50,000+ users</p>
+                        <p class="text-[0.6875rem] font-bold text-switchly-ink sm:text-sm">Trusted</p>
+                        <p class="text-[0.625rem] leading-snug text-switchly-muted sm:text-xs">50,000+ users</p>
                     </div>
                 </div>
             </div>

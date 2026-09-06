@@ -1,18 +1,24 @@
 {{-- Floating Switchly Assist chatbot --}}
 <div
     x-data="switchlyChat"
-    class="pointer-events-none fixed inset-x-0 bottom-0 z-[70] flex justify-end p-4 sm:p-6"
+    class="pointer-events-none fixed bottom-4 right-4 z-[70] h-0 w-0 sm:bottom-6 sm:right-6"
 >
-    {{-- Launcher (hidden on deals when banner is primary CTA; still useful elsewhere) --}}
+    {{-- Launcher --}}
     <button
         type="button"
         x-show="!open"
         x-cloak
+        x-transition:enter="transition ease-out duration-200 delay-150"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-100"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
         @click="show()"
-        class="pointer-events-auto ml-auto inline-flex items-center gap-2.5 rounded-full bg-switchly-black px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-neutral-800"
+        class="pointer-events-auto absolute bottom-0 right-0 inline-flex shrink-0 items-center gap-2.5 whitespace-nowrap rounded-full bg-switchly-black px-4 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-neutral-800"
         aria-label="Open Switchly Assist chat"
     >
-        <span class="relative inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-full bg-switchly-lime">
+        <span class="relative inline-flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full bg-switchly-lime">
             <img src="{{ asset('images/avatars/1.jpg') }}" alt="" class="h-full w-full object-cover">
         </span>
         Chat with us
@@ -27,8 +33,8 @@
         x-transition:enter-end="opacity-100 translate-y-0"
         x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100 translate-y-0"
-        x-transition:leave-end="opacity-0 translate-y-3"
-        class="pointer-events-auto flex w-full max-w-[22.5rem] flex-col overflow-hidden rounded-2xl border border-switchly-border bg-white shadow-[0_20px_60px_rgba(0,0,0,0.18)] sm:max-w-[24rem]"
+        x-transition:leave-end="opacity-0 translate-y-2"
+        class="pointer-events-auto absolute bottom-0 right-0 flex w-[min(100vw-2rem,24rem)] flex-col overflow-hidden rounded-2xl border border-switchly-border bg-white shadow-[0_20px_60px_rgba(0,0,0,0.18)]"
         role="dialog"
         aria-modal="false"
         aria-label="Switchly Assist chat"
@@ -49,7 +55,7 @@
             </div>
             <button
                 type="button"
-                class="inline-flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition hover:bg-white/10 hover:text-white"
+                class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-white/70 transition hover:bg-white/10 hover:text-white"
                 @click="hide()"
                 aria-label="Close chat"
             >

@@ -30,36 +30,7 @@
                 </div>
 
                 {{-- Form --}}
-                <div class="relative min-w-0 pt-8 sm:pt-10">
-                    {{-- Hand-drawn looping arrow pointing at Compare now --}}
-                    <svg
-                        class="pointer-events-none absolute right-1 top-0 hidden h-[3.75rem] w-[4.25rem] text-switchly-lime sm:block sm:right-3 lg:right-5"
-                        viewBox="0 0 68 60"
-                        fill="none"
-                        aria-hidden="true"
-                    >
-                        <path
-                            d="M42 4
-                               C54 2 64 12 62 24
-                               C60 36 48 42 38 38
-                               C28 34 26 22 34 16
-                               C40 12 50 14 52 24
-                               C54 32 48 40 38 46
-                               C32 50 26 54 20 58"
-                            stroke="currentColor"
-                            stroke-width="2.4"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                        <path
-                            d="M20 58 L9 51 M20 58 L15 67"
-                            stroke="currentColor"
-                            stroke-width="2.4"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
-
+                <div class="relative min-w-0">
                     <form action="{{ route('compare.details') }}" method="get" class="flex flex-col gap-3 sm:flex-row sm:items-start">
                         <div class="min-w-0 flex-1">
                             <label class="relative block">
@@ -69,15 +40,15 @@
                                     name="postcode"
                                     placeholder="Enter your postcode"
                                     autocomplete="postal-code"
-                                    class="w-full rounded-xl border-0 bg-white py-3.5 pl-4 pr-11 text-[0.9375rem] text-switchly-ink outline-none ring-0 placeholder:text-neutral-400 focus:ring-2 focus:ring-switchly-lime"
+                                    class="w-full rounded-xl border-0 bg-white py-2.5 pl-3.5 pr-10 text-sm text-switchly-ink outline-none ring-0 placeholder:text-neutral-400 focus:ring-2 focus:ring-switchly-lime sm:py-3.5 sm:pl-4 sm:pr-11 sm:text-[0.9375rem]"
                                 >
-                                <svg class="pointer-events-none absolute right-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                                <svg class="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400 sm:right-3.5 sm:h-5 sm:w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                                     <path d="M10 10.8a2.2 2.2 0 1 0 0-4.4 2.2 2.2 0 0 0 0 4.4Z" stroke="currentColor" stroke-width="1.5" />
                                     <path d="M10 17.5s6-5.1 6-9.2A6 6 0 1 0 4 8.3c0 4.1 6 9.2 6 9.2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
                                 </svg>
                             </label>
 
-                            <p class="mt-3 flex items-center gap-1.5 text-sm text-white/55">
+                            <p class="mt-2.5 flex items-center gap-1.5 text-xs text-white/55 sm:mt-3 sm:text-sm">
                                 <svg class="h-3.5 w-3.5 shrink-0 text-white/80" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                                     <path d="M3.5 6V4.8a3.5 3.5 0 0 1 7 0V6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
                                     <rect x="2.25" y="6" width="9.5" height="6.25" rx="1.6" stroke="currentColor" stroke-width="1.4" />
@@ -88,7 +59,7 @@
 
                         <button
                             type="submit"
-                            class="relative inline-flex shrink-0 items-center justify-center self-stretch rounded-xl bg-switchly-lime px-6 py-3.5 text-[0.9375rem] font-bold text-switchly-ink transition hover:brightness-95 sm:self-auto sm:py-[0.95rem]"
+                            class="relative inline-flex shrink-0 items-center justify-center self-stretch rounded-xl bg-switchly-lime px-5 py-2.5 text-sm font-bold text-switchly-ink transition hover:brightness-95 sm:self-auto sm:px-6 sm:py-[0.95rem] sm:text-[0.9375rem]"
                         >
                             Compare now
                         </button>

@@ -16,46 +16,7 @@
         'gas' => 'Gas only',
     ];
     $fuel = $fuelLabels[$compare['fuel'] ?? 'dual'] ?? 'Dual fuel';
-
-    $features = [
-        '12 month fixed',
-        '100% renewable electricity',
-        '£0 exit fees',
-    ];
-
-    $deals = [
-        [
-            'logo' => asset('images/suppliers/octopus-color.png'),
-            'logoAlt' => 'Octopus Energy',
-            'plan' => 'Octopus Go',
-            'badge' => 'Cheapest',
-            'features' => $features,
-            'saveYear' => 312,
-            'saveMonth' => 26.00,
-        ],
-        [
-            'logo' => asset('images/suppliers/scottishpower-color.png'),
-            'logoAlt' => 'ScottishPower',
-            'plan' => 'Secure Fixed 12',
-            'badge' => null,
-            'features' => $features,
-            'saveYear' => 265,
-            'saveMonth' => 22.08,
-        ],
-        [
-            'logo' => asset('images/suppliers/eon-color.png'),
-            'logoAlt' => 'E.ON',
-            'plan' => 'Next Flex',
-            'badge' => null,
-            'features' => [
-                'No fixed term',
-                '100% renewable electricity',
-                '£0 exit fees',
-            ],
-            'saveYear' => 198,
-            'saveMonth' => 16.50,
-        ],
-    ];
+    $deals = $deals ?? [];
 @endphp
 
 @section('content')
@@ -69,35 +30,35 @@
         </h1>
 
         {{-- Summary bar --}}
-        <div class="mt-8 flex flex-col gap-4 rounded-2xl border border-[#dce9b0] bg-[#f4f9e0] px-5 py-4 sm:mt-10 sm:flex-row sm:items-center sm:gap-0 sm:px-6 sm:py-5 lg:px-7">
-            <div class="grid flex-1 grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-0">
+        <div class="mt-6 rounded-2xl border border-[#dce9b0] bg-[#f4f9e0] px-4 py-3.5 sm:mt-10 sm:flex sm:items-center sm:gap-0 sm:px-6 sm:py-5 lg:px-7">
+            <div class="grid flex-1 grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-0">
                 <div class="sm:pr-5 lg:pr-7">
-                    <p class="text-xs text-switchly-muted">Results for</p>
-                    <p class="mt-1 text-sm font-bold text-switchly-ink sm:text-[0.9375rem]">{{ $postcode }}</p>
+                    <p class="text-[0.6875rem] text-switchly-muted sm:text-xs">Results for</p>
+                    <p class="mt-0.5 text-sm font-bold text-switchly-ink sm:mt-1 sm:text-[0.9375rem]">{{ $postcode }}</p>
                 </div>
 
                 <div class="sm:border-l sm:border-neutral-300/80 sm:px-5 lg:px-7">
-                    <p class="text-xs text-switchly-muted">Current supplier</p>
-                    <p class="mt-1 flex items-center gap-1.5 text-sm font-bold text-switchly-ink sm:text-[0.9375rem]">
+                    <p class="text-[0.6875rem] text-switchly-muted sm:text-xs">Current supplier</p>
+                    <p class="mt-0.5 flex items-center gap-1.5 text-sm font-bold text-switchly-ink sm:mt-1 sm:text-[0.9375rem]">
                         <span class="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-switchly-ink" aria-hidden="true"></span>
                         {{ $supplier }}
                     </p>
                 </div>
 
                 <div class="sm:border-l sm:border-neutral-300/80 sm:px-5 lg:px-7">
-                    <p class="text-xs text-switchly-muted">Tariff</p>
-                    <p class="mt-1 text-sm font-bold text-switchly-ink sm:text-[0.9375rem]">{{ $tariff }}</p>
+                    <p class="text-[0.6875rem] text-switchly-muted sm:text-xs">Tariff</p>
+                    <p class="mt-0.5 text-sm font-bold text-switchly-ink sm:mt-1 sm:text-[0.9375rem]">{{ $tariff }}</p>
                 </div>
 
                 <div class="sm:border-l sm:border-neutral-300/80 sm:px-5 lg:px-7">
-                    <p class="text-xs text-switchly-muted">Estimated annual usage</p>
-                    <p class="mt-1 text-sm font-bold text-switchly-ink sm:text-[0.9375rem]">{{ $usage }} kWh · {{ $fuel }}</p>
+                    <p class="text-[0.6875rem] text-switchly-muted sm:text-xs">Est. annual usage</p>
+                    <p class="mt-0.5 text-sm font-bold text-switchly-ink sm:mt-1 sm:text-[0.9375rem]">{{ $usage }} kWh · {{ $fuel }}</p>
                 </div>
             </div>
 
             <a
                 href="{{ route('compare.usage') }}"
-                class="shrink-0 text-sm font-semibold text-switchly-lime underline underline-offset-2 hover:brightness-90 sm:pl-5"
+                class="mt-3 inline-block text-sm font-semibold text-switchly-lime underline underline-offset-2 hover:brightness-90 sm:mt-0 sm:shrink-0 sm:pl-5"
             >
                 Edit
             </a>
@@ -105,33 +66,35 @@
 
         {{-- Filters + deal cards --}}
         <div class="mt-8 sm:mt-10" x-data="{ sort: 'cheapest' }">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div class="flex flex-wrap gap-2">
-                    @foreach ([
-                        'cheapest' => 'Cheapest',
-                        'top' => 'Top rated',
-                        'green' => 'Green energy',
-                        'saving' => 'Biggest saving',
-                    ] as $key => $label)
-                        <button
-                            type="button"
-                            @click="sort = '{{ $key }}'"
-                            :class="sort === '{{ $key }}'
-                                ? 'bg-switchly-black text-white'
-                                : 'bg-[#f0f0f0] text-switchly-ink hover:bg-neutral-200'"
-                            class="rounded-full px-4 py-2.5 text-sm font-medium transition"
-                        >
-                            {{ $label }}
-                        </button>
-                    @endforeach
+            <div class="flex items-center gap-2 sm:justify-between">
+                <div class="-mx-5 min-w-0 flex-1 overflow-x-auto px-5 [-ms-overflow-style:none] [scrollbar-width:none] sm:mx-0 sm:overflow-visible sm:px-0 [&::-webkit-scrollbar]:hidden">
+                    <div class="flex w-max items-center gap-2 sm:w-auto sm:flex-wrap">
+                        @foreach ([
+                            'cheapest' => 'Cheapest',
+                            'top' => 'Top rated',
+                            'green' => 'Green energy',
+                            'saving' => 'Biggest saving',
+                        ] as $key => $label)
+                            <button
+                                type="button"
+                                @click="sort = '{{ $key }}'"
+                                :class="sort === '{{ $key }}'
+                                    ? 'bg-switchly-black text-white'
+                                    : 'bg-[#f0f0f0] text-switchly-ink hover:bg-neutral-200'"
+                                class="shrink-0 rounded-full px-3.5 py-2 text-xs font-medium transition sm:px-4 sm:py-2.5 sm:text-sm"
+                            >
+                                {{ $label }}
+                            </button>
+                        @endforeach
+                    </div>
                 </div>
 
                 <button
                     type="button"
-                    class="inline-flex items-center justify-center gap-2 self-start rounded-full border border-switchly-border bg-white px-4 py-2.5 text-sm font-medium text-switchly-ink transition hover:bg-neutral-50 sm:self-auto"
+                    class="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full border border-switchly-border bg-white px-3.5 py-2 text-xs font-medium text-switchly-ink transition hover:bg-neutral-50 sm:gap-2 sm:px-4 sm:py-2.5 sm:text-sm"
                 >
                     Filter
-                    <svg class="h-4 w-4 text-switchly-muted" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <svg class="h-3.5 w-3.5 text-switchly-muted sm:h-4 sm:w-4" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                         <path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
                     </svg>
                 </button>

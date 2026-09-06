@@ -12,14 +12,35 @@ class DatabaseSeeder extends Seeder
 
     /**
      * Seed the application's database.
+     *
+     * Default passwords (change in production):
+     * - admin@switchly.test / password
+     * - affiliate@switchly.test / password
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        User::query()->updateOrCreate(
+            ['email' => 'admin@switchly.test'],
+            [
+                'name' => 'Switchly Admin',
+                'password' => 'password',
+                'role' => User::ROLE_ADMIN,
+                'referral_code' => null,
+                'commission_rate' => 0,
+                'email_verified_at' => now(),
+            ],
+        );
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        User::query()->updateOrCreate(
+            ['email' => 'affiliate@switchly.test'],
+            [
+                'name' => 'Demo Affiliate',
+                'password' => 'password',
+                'role' => User::ROLE_AFFILIATE,
+                'referral_code' => 'DEMOAFF1',
+                'commission_rate' => 30,
+                'email_verified_at' => now(),
+            ],
+        );
     }
 }
