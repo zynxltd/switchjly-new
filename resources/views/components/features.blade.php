@@ -23,15 +23,15 @@
     ];
 @endphp
 
-<section id="why-switchly" class="scroll-mt-24 bg-[#f3f3f3] py-20 sm:py-24" aria-labelledby="why-heading">
+<section id="why-brillia" class="scroll-mt-24 bg-[#f3f3f3] py-20 sm:py-24" aria-labelledby="why-heading">
     <div class="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div class="text-center">
-            <p class="text-xs font-bold uppercase tracking-[0.16em] text-switchly-lime sm:text-[0.8125rem]">
-                Why Switchly?
+            <p class="text-xs font-bold uppercase tracking-[0.16em] text-brillia-lime sm:text-[0.8125rem]">
+                Why Brillia?
             </p>
             <h2
                 id="why-heading"
-                class="mt-3 text-[2rem] font-extrabold tracking-tight text-switchly-ink sm:text-4xl lg:text-[2.75rem]"
+                class="mt-3 text-[2rem] font-extrabold tracking-tight text-brillia-ink sm:text-4xl lg:text-[2.75rem]"
             >
                 More than just a comparison
             </h2>
@@ -40,7 +40,7 @@
         <div class="mt-12 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4 lg:gap-6 xl:gap-7">
             @foreach ($features as $feature)
                 <article class="rounded-[1.25rem] bg-white p-4 shadow-[0_10px_40px_rgba(0,0,0,0.06)] sm:p-9 lg:min-h-[17.5rem]">
-                    <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#e8f6b8] text-switchly-ink sm:mb-6 sm:h-14 sm:w-14">
+                    <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#e8f6b8] text-brillia-ink sm:mb-6 sm:h-14 sm:w-14">
                         @if ($feature['icon'] === 'tag')
                             <svg class="h-5 w-5 sm:h-7 sm:w-7" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                                 <path d="M20.4 12.3 12.5 20.2a2.1 2.1 0 0 1-3 0L3.2 13.9V4.8h9.1l8.1 7.5a2.1 2.1 0 0 1 0 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" />
@@ -65,10 +65,10 @@
                         @endif
                     </div>
 
-                    <h3 class="text-sm font-bold tracking-tight text-switchly-ink sm:text-xl">
+                    <h3 class="text-sm font-bold tracking-tight text-brillia-ink sm:text-xl">
                         {{ $feature['title'] }}
                     </h3>
-                    <p class="mt-1.5 text-xs leading-relaxed text-switchly-muted sm:mt-3 sm:text-[0.9375rem]">
+                    <p class="mt-1.5 text-xs leading-relaxed text-brillia-muted sm:mt-3 sm:text-[0.9375rem]">
                         {{ $feature['body'] }}
                     </p>
                 </article>

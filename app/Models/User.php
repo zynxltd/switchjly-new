@@ -43,9 +43,11 @@ class User extends Authenticatable
         return $this->role === self::ROLE_AFFILIATE;
     }
 
-    public function referralUrl(): string
+    public function referralUrl(string $path = '/'): string
     {
-        return url('/?ref='.$this->referral_code);
+        $url = url($path);
+
+        return $url.(str_contains($url, '?') ? '&' : '?').'ref='.$this->referral_code;
     }
 
     public function affiliateClicks(): HasMany

@@ -2,51 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Lead;
-use App\Services\MailerLiteService;
-use App\Support\AffiliateAttribution;
+use App\Rules\UkPostcode;
+use App\Services\CrmService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class LeadController extends Controller
 {
-    public function store(Request $request, MailerLiteService $mailerLite): JsonResponse
+    public function store(Request $request, CrmService $crm): JsonResponse
     {
         $validated = $request->validate([
             'email' => ['required', 'email', 'max:255'],
-            'name' => ['nullable', 'string', 'max:120'],
-            'postcode' => ['nullable', 'string', 'max:16'],
+            'name' => [
+                $request->input('source') === 'chat' ? 'required' : 'nullable',
+                'string',
+                'max:120',
+            ],
+            'postcode' => ['nullable', 'string', 'max:8', new UkPostcode],
             'source' => ['nullable', 'string', 'max:40'],
         ]);
 
-        $attribution = AffiliateAttribution::fromRequest($request);
-
-        $lead = Lead::query()->updateOrCreate(
-            ['email' => strtolower($validated['email'])],
-            [
-                'name' => $validated['name'] ?? null,
-                'postcode' => isset($validated['postcode'])
-                    ? strtoupper(preg_replace('/\s+/', ' ', trim($validated['postcode'])))
-                    : null,
-                'source' => $validated['source'] ?? 'popup',
-                'affiliate_id' => $attribution['affiliate_id'],
-                'referral_code' => $attribution['referral_code'],
-                'meta' => [
-                    'ip' => $request->ip(),
-                    'user_agent' => substr((string) $request->userAgent(), 0, 500),
-                    'referer' => $request->headers->get('referer'),
-                ],
-            ],
-        );
-
-        $synced = $mailerLite->sync($lead);
+        $result = $crm->capture([
+            'email' => $validated['email'],
+            'name' => $validated['name'] ?? null,
+            'postcode' => $validated['postcode'] ?? null,
+            'source' => $validated['source'] ?? 'popup',
+        ], $request);
 
         return response()->json([
             'ok' => true,
-            'synced' => $synced,
-            'message' => $synced
-                ? 'Thanks — check your inbox for deals.'
-                : 'Thanks — you’re on the list.',
+            'synced' => $result['synced'],
+            'crm' => true,
+            'message' => $result['synced']
+                ? 'Thanks — you’re on our list.'
+                : 'Thanks — we’ve saved your details.',
         ]);
     }
 }

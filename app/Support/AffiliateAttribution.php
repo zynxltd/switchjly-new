@@ -14,6 +14,7 @@ class AffiliateAttribution
     {
         $affiliateId = $request->session()->get('affiliate_id');
         $code = $request->session()->get('affiliate_ref')
+            ?: $request->cookie('brillia_ref')
             ?: $request->cookie('switchly_ref');
 
         if ($code && ! $affiliateId) {

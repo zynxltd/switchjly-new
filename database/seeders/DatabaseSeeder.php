@@ -14,15 +14,15 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      *
      * Default passwords (change in production):
-     * - admin@switchly.test / password
-     * - affiliate@switchly.test / password
+     * - admin@brillia.test / password
+     * - affiliate@brillia.test / password
      */
     public function run(): void
     {
         User::query()->updateOrCreate(
-            ['email' => 'admin@switchly.test'],
+            ['email' => 'admin@brillia.test'],
             [
-                'name' => 'Switchly Admin',
+                'name' => 'Brillia Admin',
                 'password' => 'password',
                 'role' => User::ROLE_ADMIN,
                 'referral_code' => null,
@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
         );
 
         User::query()->updateOrCreate(
-            ['email' => 'affiliate@switchly.test'],
+            ['email' => 'affiliate@brillia.test'],
             [
                 'name' => 'Demo Affiliate',
                 'password' => 'password',
@@ -42,5 +42,7 @@ class DatabaseSeeder extends Seeder
                 'email_verified_at' => now(),
             ],
         );
+
+        $this->call(CmsSeeder::class);
     }
 }

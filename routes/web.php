@@ -3,8 +3,13 @@
 use App\Http\Controllers\Admin\AffiliateController as AdminAffiliateController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\Admin\GuideController as AdminGuideController;
 use App\Http\Controllers\Admin\LeadController as AdminLeadController;
+use App\Http\Controllers\Admin\SettingController as AdminSettingController;
+use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
 use App\Http\Controllers\Affiliate\AuthController as AffiliateAuthController;
+use App\Http\Controllers\Affiliate\CreativesController as AffiliateCreativesController;
 use App\Http\Controllers\Affiliate\DashboardController as AffiliateDashboardController;
 use App\Http\Controllers\CompareController;
 use App\Http\Controllers\ContactController;
@@ -40,6 +45,10 @@ Route::prefix('compare')->name('compare.')->group(function () {
     Route::post('/usage', [CompareController::class, 'storeUsage'])->name('usage.store');
 
     Route::get('/deals', [CompareController::class, 'deals'])->name('deals');
+    Route::post('/deals', [CompareController::class, 'update'])->name('deals.update');
+    Route::get('/go/{deal}', [CompareController::class, 'redirect'])->name('redirect');
+    Route::get('/apply/{deal}', [CompareController::class, 'apply'])->name('apply');
+    Route::post('/apply/{deal}', [CompareController::class, 'storeApply'])->name('apply.store');
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -53,6 +62,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/leads', [AdminLeadController::class, 'index'])->name('leads');
         Route::get('/affiliates', [AdminAffiliateController::class, 'index'])->name('affiliates');
         Route::get('/payouts', [AdminAffiliateController::class, 'payouts'])->name('payouts');
+
+        Route::prefix('cms')->name('cms.')->group(function () {
+            Route::resource('guides', AdminGuideController::class)->except(['show']);
+            Route::resource('faqs', AdminFaqController::class)->except(['show']);
+            Route::resource('testimonials', AdminTestimonialController::class)->except(['show']);
+            Route::get('/settings', [AdminSettingController::class, 'edit'])->name('settings.edit');
+            Route::put('/settings', [AdminSettingController::class, 'update'])->name('settings.update');
+        });
+
         Route::post('/logout', [AdminAuthController::class, 'logout'])->name('logout');
     });
 });
@@ -65,6 +83,7 @@ Route::prefix('affiliate')->name('affiliate.')->group(function () {
 
     Route::middleware(['auth', 'role:affiliate'])->group(function () {
         Route::get('/', AffiliateDashboardController::class)->name('dashboard');
+        Route::get('/creatives', AffiliateCreativesController::class)->name('creatives');
         Route::post('/logout', [AffiliateAuthController::class, 'logout'])->name('logout');
     });
 });

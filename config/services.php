@@ -40,6 +40,11 @@ return [
         'group_id' => env('MAILERLITE_GROUP_ID'),
     ],
 
+    'brevo' => [
+        'key' => env('BREVO_API_KEY'),
+        'list_id' => env('BREVO_LIST_ID'),
+    ],
+
     'energy_shop' => [
         'switching_base_url' => env('ENERGY_SHOP_SWITCHING_BASE_URL'),
         'tariff_feed_base_url' => env('ENERGY_SHOP_TARIFF_FEED_BASE_URL'),

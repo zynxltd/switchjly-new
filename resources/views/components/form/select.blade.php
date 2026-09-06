@@ -8,13 +8,13 @@
 
 <label class="block">
     @if ($label)
-        <span class="mb-2 block text-sm font-semibold text-switchly-ink">{{ $label }}</span>
+        <span class="mb-2 block text-sm font-semibold text-brillia-ink">{{ $label }}</span>
     @endif
     <div class="relative">
         <select
             name="{{ $name }}"
             {{ $attributes->merge([
-                'class' => 'w-full appearance-none rounded-xl border border-switchly-border bg-white px-3.5 py-2.5 pr-10 text-sm text-switchly-ink outline-none focus:border-switchly-ink focus:ring-2 focus:ring-switchly-lime/30 sm:px-4 sm:py-3.5 sm:pr-11',
+                'class' => 'w-full appearance-none rounded-xl border border-brillia-border bg-white px-3.5 py-2.5 pr-10 text-sm text-brillia-ink outline-none focus:border-brillia-ink focus:ring-2 focus:ring-brillia-lime/30 sm:px-4 sm:py-3.5 sm:pr-11',
             ]) }}
         >
             <option value="" disabled @selected(old($name, $value) === '')>{{ $placeholder }}</option>

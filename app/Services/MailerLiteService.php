@@ -29,6 +29,7 @@ class MailerLiteService
                 'fields' => array_filter([
                     'name' => $lead->name,
                     'postcode' => $lead->postcode,
+                    'source' => $lead->source,
                 ]),
             ];
 

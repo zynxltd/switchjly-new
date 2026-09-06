@@ -34,7 +34,7 @@ class CaptureAffiliateReferral
         $request->session()->put('affiliate_id', $affiliate->id);
 
         cookie()->queue(cookie(
-            'switchly_ref',
+            'brillia_ref',
             $code,
             60 * 24 * 30,
             '/',
@@ -51,7 +51,7 @@ class CaptureAffiliateReferral
                 'referral_code' => $code,
                 'ip_address' => $request->ip(),
                 'user_agent' => substr((string) $request->userAgent(), 0, 500),
-                'landing_path' => '/'.$request->path(),
+                'landing_path' => '/'.ltrim($request->path(), '/'),
             ]);
         }
 
