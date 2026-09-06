@@ -1,16 +1,43 @@
 @php
-    use App\Models\Testimonial;
-
-    $reviews = Testimonial::query()->published()->get()->map(fn (Testimonial $item) => [
-        'quote' => $item->quote,
-        'name' => $item->name,
-        'place' => $item->place,
-        'avatar' => $item->avatar,
-        'rating' => $item->rating,
-    ])->all();
+    $reviews = [
+        [
+            'quote' => 'Switched in 5 minutes and saved £276 a year!',
+            'name' => 'Sarah T.',
+            'place' => 'Manchester',
+            'avatar' => 'sarah',
+            'rating' => 5,
+        ],
+        [
+            'quote' => "Finally, a comparison site that's simple and actually shows the best deals.",
+            'name' => 'James L.',
+            'place' => 'Bristol',
+            'avatar' => 'james',
+            'rating' => 5,
+        ],
+        [
+            'quote' => 'Great experience from start to finish. Lower bills, happy days!',
+            'name' => 'Emily R.',
+            'place' => 'Leeds',
+            'avatar' => 'emily',
+            'rating' => 5,
+        ],
+        [
+            'quote' => 'Clear deals, no jargon. I finally understand my tariff.',
+            'name' => 'Priya N.',
+            'place' => 'London',
+            'avatar' => 'sarah',
+            'rating' => 5,
+        ],
+        [
+            'quote' => 'Saved over £300 and the whole process was painless.',
+            'name' => 'Tom H.',
+            'place' => 'Birmingham',
+            'avatar' => 'james',
+            'rating' => 5,
+        ],
+    ];
 @endphp
 
-@if ($reviews !== [])
 <section
     class="bg-[#f5f5f5] py-16 sm:py-20"
     aria-labelledby="testimonials-heading"
@@ -116,4 +143,3 @@
         </div>
     </div>
 </section>
-@endif

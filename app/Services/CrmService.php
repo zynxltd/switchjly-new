@@ -6,6 +6,8 @@ use App\Models\Lead;
 use App\Rules\UkPostcode;
 use App\Support\AffiliateAttribution;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class CrmService
 {
@@ -25,11 +27,12 @@ class CrmService
      *     referral_code?: string|null,
      *     meta?: array<string, mixed>|null
      * }  $data
-     * @return array{lead: Lead, synced: bool}
+     * @return array{lead: Lead|null, synced: bool}
      */
     public function capture(array $data, ?Request $request = null): array
     {
         $email = strtolower(trim($data['email']));
+        $name = filled($data['name'] ?? null) ? trim((string) $data['name']) : null;
         $attribution = $request
             ? AffiliateAttribution::fromRequest($request)
             : ['affiliate_id' => null, 'referral_code' => null];
@@ -48,26 +51,38 @@ class CrmService
             'referer' => $request?->headers->get('referer'),
         ], fn ($value) => $value !== null && $value !== '');
 
-        $existing = Lead::query()->where('email', $email)->first();
-        $mergedMeta = array_merge($existing?->meta ?? [], $meta);
+        try {
+            $existing = Lead::query()->where('email', $email)->first();
+            $mergedMeta = array_merge($existing?->meta ?? [], $meta);
 
-        $lead = Lead::query()->updateOrCreate(
-            ['email' => $email],
-            [
-                'name' => filled($data['name'] ?? null) ? trim((string) $data['name']) : ($existing?->name),
-                'postcode' => $postcode ?? $existing?->postcode,
-                'source' => $data['source'] ?? $existing?->source ?? 'crm',
-                'affiliate_id' => $data['affiliate_id'] ?? $attribution['affiliate_id'] ?? $existing?->affiliate_id,
-                'referral_code' => $data['referral_code'] ?? $attribution['referral_code'] ?? $existing?->referral_code,
-                'meta' => $mergedMeta !== [] ? $mergedMeta : null,
-            ],
-        );
+            $lead = Lead::query()->updateOrCreate(
+                ['email' => $email],
+                [
+                    'name' => $name ?? $existing?->name,
+                    'postcode' => $postcode ?? $existing?->postcode,
+                    'source' => $data['source'] ?? $existing?->source ?? 'crm',
+                    'affiliate_id' => $data['affiliate_id'] ?? $attribution['affiliate_id'] ?? $existing?->affiliate_id,
+                    'referral_code' => $data['referral_code'] ?? $attribution['referral_code'] ?? $existing?->referral_code,
+                    'meta' => $mergedMeta !== [] ? $mergedMeta : null,
+                ],
+            );
 
-        $synced = $this->brevo->sync($lead);
+            $synced = $this->brevo->sync($lead);
 
-        return [
-            'lead' => $lead->fresh(),
-            'synced' => $synced,
-        ];
+            return [
+                'lead' => $lead->fresh(),
+                'synced' => $synced,
+            ];
+        } catch (Throwable $e) {
+            Log::warning('CRM lead persistence skipped — database unavailable.', [
+                'email' => $email,
+                'message' => $e->getMessage(),
+            ]);
+
+            return [
+                'lead' => null,
+                'synced' => $this->brevo->syncContact($email, $name),
+            ];
+        }
     }
 }

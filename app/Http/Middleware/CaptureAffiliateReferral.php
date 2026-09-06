@@ -6,7 +6,9 @@ use App\Models\AffiliateClick;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 class CaptureAffiliateReferral
 {
@@ -18,10 +20,18 @@ class CaptureAffiliateReferral
             return $next($request);
         }
 
-        $affiliate = User::query()
-            ->where('role', User::ROLE_AFFILIATE)
-            ->where('referral_code', $code)
-            ->first();
+        try {
+            $affiliate = User::query()
+                ->where('role', User::ROLE_AFFILIATE)
+                ->where('referral_code', $code)
+                ->first();
+        } catch (Throwable $e) {
+            Log::warning('Affiliate referral lookup skipped — database unavailable.', [
+                'message' => $e->getMessage(),
+            ]);
+
+            return $next($request);
+        }
 
         if (! $affiliate) {
             return $next($request);
@@ -46,13 +56,19 @@ class CaptureAffiliateReferral
         ));
 
         if (! $alreadyTracked) {
-            AffiliateClick::query()->create([
-                'affiliate_id' => $affiliate->id,
-                'referral_code' => $code,
-                'ip_address' => $request->ip(),
-                'user_agent' => substr((string) $request->userAgent(), 0, 500),
-                'landing_path' => '/'.ltrim($request->path(), '/'),
-            ]);
+            try {
+                AffiliateClick::query()->create([
+                    'affiliate_id' => $affiliate->id,
+                    'referral_code' => $code,
+                    'ip_address' => $request->ip(),
+                    'user_agent' => substr((string) $request->userAgent(), 0, 500),
+                    'landing_path' => '/'.ltrim($request->path(), '/'),
+                ]);
+            } catch (Throwable $e) {
+                Log::warning('Affiliate click tracking skipped — database unavailable.', [
+                    'message' => $e->getMessage(),
+                ]);
+            }
         }
 
         return $next($request);

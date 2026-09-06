@@ -1,13 +1,28 @@
 @php
-    use App\Models\Faq;
-
-    $faqs = Faq::query()->published()->get()->map(fn (Faq $faq) => [
-        'q' => $faq->question,
-        'a' => $faq->answer,
-    ])->all();
+    $faqs = [
+        [
+            'q' => 'How does Brillia work?',
+            'a' => 'Enter a few details about your home and current tariff. We compare live deals from leading UK suppliers and show what you could save — usually in under a minute.',
+        ],
+        [
+            'q' => 'Is Brillia really free?',
+            'a' => 'Yes — 100% free. We never charge you to compare or switch. There are no hidden fees.',
+        ],
+        [
+            'q' => 'Will I have to switch supplier?',
+            'a' => 'Only if you choose to. We show your options clearly so you can stick with your current deal or switch when you’re ready — no pressure.',
+        ],
+        [
+            'q' => 'How does Brillia make money?',
+            'a' => 'If you switch, we may earn a commission from the supplier. It never affects the price you pay.',
+        ],
+        [
+            'q' => 'Is my data safe with Brillia?',
+            'a' => 'Yes. We only use your details to find matching deals and never sell your data. Your information is encrypted and handled securely.',
+        ],
+    ];
 @endphp
 
-@if ($faqs !== [])
 <section id="faqs" class="scroll-mt-24 bg-white py-16 sm:py-20" aria-labelledby="faqs-heading">
     <div class="mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
         <div class="text-center">
@@ -70,4 +85,3 @@
         </div>
     </div>
 </section>
-@endif

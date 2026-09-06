@@ -16,25 +16,62 @@ class BrevoService
      */
     public function sync(Lead $lead): bool
     {
+        $result = $this->pushContact($lead->email, $lead->name);
+
+        try {
+            if ($result['ok']) {
+                $lead->forceFill([
+                    'esp_synced_at' => now(),
+                    'esp_error' => null,
+                ])->save();
+
+                return true;
+            }
+
+            $lead->forceFill([
+                'esp_error' => $result['error'] ?? 'Brevo sync failed.',
+            ])->save();
+        } catch (Throwable $e) {
+            Log::warning('Brevo lead status update skipped.', [
+                'lead_id' => $lead->id,
+                'message' => $e->getMessage(),
+            ]);
+        }
+
+        return false;
+    }
+
+    /**
+     * Create or update a Brevo contact by email (no local DB required).
+     */
+    public function syncContact(string $email, ?string $name = null): bool
+    {
+        return $this->pushContact($email, $name)['ok'];
+    }
+
+    /**
+     * @return array{ok: bool, error: string|null}
+     */
+    protected function pushContact(string $email, ?string $name = null): array
+    {
         $apiKey = config('services.brevo.key');
         $listId = config('services.brevo.list_id');
 
         if (blank($apiKey)) {
-            $lead->forceFill([
-                'esp_error' => 'Brevo API key not configured.',
-            ])->save();
-
-            return false;
+            return [
+                'ok' => false,
+                'error' => 'Brevo API key not configured.',
+            ];
         }
 
         try {
             $attributes = array_filter(
-                $this->nameAttributes($lead->name),
+                $this->nameAttributes($name),
                 fn ($value) => filled($value),
             );
 
             $payload = [
-                'email' => $lead->email,
+                'email' => $email,
                 'updateEnabled' => true,
                 'emailBlacklisted' => false,
             ];
@@ -58,36 +95,32 @@ class BrevoService
                 ->post('https://api.brevo.com/v3/contacts', $payload);
 
             if ($response->successful()) {
-                $lead->forceFill([
-                    'esp_synced_at' => now(),
-                    'esp_error' => null,
-                ])->save();
-
-                return true;
+                return [
+                    'ok' => true,
+                    'error' => null,
+                ];
             }
 
-            $lead->forceFill([
-                'esp_error' => $response->body(),
-            ])->save();
-
             Log::warning('Brevo sync failed', [
-                'lead_id' => $lead->id,
+                'email' => $email,
                 'status' => $response->status(),
                 'body' => $response->json() ?? $response->body(),
             ]);
 
-            return false;
+            return [
+                'ok' => false,
+                'error' => $response->body(),
+            ];
         } catch (Throwable $e) {
-            $lead->forceFill([
-                'esp_error' => $e->getMessage(),
-            ])->save();
-
             Log::error('Brevo sync exception', [
-                'lead_id' => $lead->id,
+                'email' => $email,
                 'message' => $e->getMessage(),
             ]);
 
-            return false;
+            return [
+                'ok' => false,
+                'error' => $e->getMessage(),
+            ];
         }
     }
 

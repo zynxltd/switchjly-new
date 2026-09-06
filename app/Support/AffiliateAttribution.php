@@ -4,6 +4,7 @@ namespace App\Support;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Throwable;
 
 class AffiliateAttribution
 {
@@ -18,10 +19,14 @@ class AffiliateAttribution
             ?: $request->cookie('switchly_ref');
 
         if ($code && ! $affiliateId) {
-            $affiliate = User::query()
-                ->where('role', User::ROLE_AFFILIATE)
-                ->where('referral_code', strtoupper((string) $code))
-                ->first();
+            try {
+                $affiliate = User::query()
+                    ->where('role', User::ROLE_AFFILIATE)
+                    ->where('referral_code', strtoupper((string) $code))
+                    ->first();
+            } catch (Throwable) {
+                $affiliate = null;
+            }
 
             if ($affiliate) {
                 $affiliateId = $affiliate->id;

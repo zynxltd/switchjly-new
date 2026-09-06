@@ -1,13 +1,3 @@
-@php
-    use App\Models\SiteSetting;
-
-    $promoEnabled = SiteSetting::bool('promo_enabled', true);
-    $promoLabel = SiteSetting::getValue('promo_label', 'Free comparison:');
-    $promoMessage = SiteSetting::getValue('promo_message', 'Check today’s UK energy deals and see what you could save —');
-    $promoCta = SiteSetting::getValue('promo_cta', 'Compare now');
-@endphp
-
-@if ($promoEnabled)
 {{-- Top promo banner above header --}}
 <div
     x-data="{
@@ -20,13 +10,13 @@
     <div class="mx-auto flex max-w-7xl items-center justify-center gap-3 px-5 py-2.5 text-center sm:px-8 lg:gap-4 lg:px-10">
         <span class="hidden h-2 w-2 shrink-0 rounded-full bg-brillia-lime sm:inline-block" aria-hidden="true"></span>
         <p class="text-[0.8125rem] font-medium leading-snug sm:text-sm">
-            <span class="text-brillia-lime">{{ $promoLabel }}</span>
-            {{ $promoMessage }}
+            <span class="text-brillia-lime">Free comparison:</span>
+            Check today’s UK energy deals and see what you could save —
             <a
                 href="{{ route('compare.details') }}"
                 class="font-bold text-white underline decoration-brillia-lime decoration-2 underline-offset-2 transition hover:text-brillia-lime"
             >
-                {{ $promoCta }}
+                Compare now
             </a>
         </p>
         <button
@@ -41,4 +31,3 @@
         </button>
     </div>
 </div>
-@endif
